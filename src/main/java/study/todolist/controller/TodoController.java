@@ -46,8 +46,8 @@ public class TodoController {
     }
 
     @PatchMapping("/{id}/done")
-    public ResponseEntity<Todo> updateTodo(@PathVariable Long id){
-        todoService.updateTodo(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Todo> updateTodo(@PathVariable Long id, @RequestBody Todo todo){
+        todoService.updateTodo(id, todo);
+        return ResponseEntity.ok(todo);
     }
 }
