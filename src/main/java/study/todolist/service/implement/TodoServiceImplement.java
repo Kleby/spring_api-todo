@@ -13,6 +13,7 @@ import study.todolist.service.TodoService;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TodoServiceImplement implements TodoService {
@@ -43,14 +44,12 @@ public class TodoServiceImplement implements TodoService {
     }
 
     @Override
-    public Todo updateTodo(Long id){
-        return tr.findById(id).map( todo -> {
-            todo.setDone(true);
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/YY HH:mm");
-            todo.setDoneDate(LocalDateTime.now().format(dtf));
-            tr.save(todo);
-            return todo;
-        }).orElse(null);
+    public Todo updateTodo(Long id, Todo todo){
+        Optional<Todo> todoBd = tr.findById(id);
+        if (todoBd.isPresent()) {
+            addTodo(todo);
+        }
+        return todo;
     }
 
 }
